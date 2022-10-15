@@ -2,16 +2,16 @@ import { createTheme } from '@mui/material/styles';
 import { red,  } from '@mui/material/colors';
 
 
-export const lightTheme = createTheme({
+export const darkTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
-      main: '#1E1E1E'
+      main: '#fff'
     },
     secondary: {
       main: '#7600bc'
     },
-    info: {
+    info:{
       main: '#fff'
     }
   },
@@ -28,7 +28,7 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: 'white',
+          backgroundColor: 'dark',
           height: 60
         },
       }
@@ -57,25 +57,23 @@ export const lightTheme = createTheme({
         variant: 'contained',
         size: 'small',
         disableElevation: true,
-        // color: 'info'
       },
       styleOverrides: {
         root: {
-          // backgroundColor: 'white',
-          // color: 'black',
+          backgroundColor: 'rgba(0,0,0,0.05)',
+          color: 'white',
           textTransform: 'none',
           boxShadow: 'none',
           borderRadius: 10,
           ":hover": {
-            backgroundColor: 'rgba(0,0,0,0.05)',
-            transition: 'all 0.3s ease-in-out',
-            color: 'black'
+            backgroundColor: '#7600bc',
+            transition: 'all 0.3s ease-in-out'
           }
         }
       }
     },
-
-
+    
+    
     MuiCard: {
       defaultProps: {
         elevation: 0
