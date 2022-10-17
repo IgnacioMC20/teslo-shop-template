@@ -5,10 +5,10 @@ export const ShopLayout = ({ children, title, pageDescription, imageFullUrl }) =
     return (
         <>
             <Head>
-                <title>{title}</title>
+                <title>{`Teslo | ${title}`}</title>
                 <meta name='description' content={pageDescription} />
 
-                <meta name='og:title' content={title} />
+                <meta name='og:title' content={`Teslo | ${title}`} />
                 <meta name='og:description' content={pageDescription} />
                 {
                     imageFullUrl && (
