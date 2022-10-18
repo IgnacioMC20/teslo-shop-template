@@ -8,7 +8,7 @@ const LoginPage = () => {
         <AuthLayout title={'Login'}>
             <Grid container sx={{ height: '100%' }}>
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-                    <Card sx={{ width: '25%', padding: '25px 25px', backgroundColor: 'rgba(255,255,255,0.9)' }}>
+                    <Card sx={{ width: '25%', padding: '25px 25px', backgroundColor: 'rgba(255,255,255)', opacity: 0.9 }}>
                         <Grid container spacing={4}>
                             <Grid item xs={12} display='flex' justifyContent='center'>
                                 <Typography color='primary' variant='h1' component='h1'>Iniciar Sesión</Typography>
