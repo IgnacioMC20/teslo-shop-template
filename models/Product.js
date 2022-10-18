@@ -1,0 +1,61 @@
+// interface SeedProduct {
+//     description: string;
+//     images: string[];
+//     inStock: number;
+//     price: number;
+//     sizes: ValidSizes[];
+//     slug: string;
+//     tags: string[];
+//     title: string;
+//     type: ValidTypes;
+//     gender: 'men'|'women'|'kid'|'unisex'
+// }
+
+// type ValidSizes = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
+// type ValidTypes = 'shirts'|'pants'|'hoodies'|'hats';
+
+// interface SeedData {
+//     products: SeedProduct[],
+// }
+
+
+import mongoose, { model, Model, Schema } from "mongoose";
+
+const productSchema = new Schema({
+    description: { type: String, required: true },
+    images: [{ type: String }],
+    inStock: { type: Number, required: true, default: 0 },
+    price: { type: Number, required: true, default: 0 },
+    sizes: [{
+        type: String,
+        enum: {
+            values: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+            message: '{VALUE} no es un tamaño válido',
+        }
+    }],
+    slug: { type: String, required: true, unique: true },
+    tags: [{ type: String }],
+    title: { type: String, required: true },
+    type: {
+        type: String,
+        enum: {
+            values: ['shirts', 'pants', 'hoodies', 'hats'],
+            message: '{VALUE} no es un tipo permitido'
+        }
+    },
+    gender: {
+        type: String,
+        enum: {
+            values: ['men', 'women', 'kid', 'unisex'],
+            message: '{VALUE} no es un género válido'
+        }
+    }
+}, {
+    timestamps: true
+});
+
+productSchema.index({ title: 'text', tags: 'text' });
+
+const Product = mongoose.models.Product || model('Product', productSchema);
+
+export default Product;
