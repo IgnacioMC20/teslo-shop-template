@@ -4,5 +4,5 @@
     justify-content: center;
     background-size: contain;
     background-position: center;
-    height: 650px;
+    height: calc(100vh - 200px);
 }

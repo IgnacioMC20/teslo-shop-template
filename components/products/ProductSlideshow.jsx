@@ -13,7 +13,7 @@ export const ProductSlideshow = ({ product }) => {
 
     const slideImages = product.images.map((image) => {
         return {
-            url: `http://localhost:3000/products/${image}`,
+            url: `/products/${image}`,
             caption: 'Slide 1'
         }
     });
@@ -27,7 +27,7 @@ export const ProductSlideshow = ({ product }) => {
             >
                 {slideImages.map((slideImage, index) => (
                     <div className={ styles['each-slide']} key={index}>
-                        <div style={{ backgroundImage: `url(${slideImage.url})`, backgroundSize: 'cover' }}>
+                        <div style={{ backgroundImage: `url(${slideImage.url})`, backgroundSize: 'cover',  }}>
                             {/* <span>{slideImage.caption}</span> */}
                         </div>
                     </div>
