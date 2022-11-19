@@ -4,7 +4,7 @@ import { Box } from "@mui/system"
 import NextLink from "next/link"
 import { ShopLayout } from "../../components/layouts"
 
-const empty = () => {
+const EmptyPage = () => {
     return (
         <ShopLayout title={'Empty Cart'} pageDescription={'No products in Cart'}>
             <Box
@@ -21,9 +21,9 @@ const empty = () => {
                     </Box>
                 </Box>
 
-                <Box display='flex' flexDirection='row' alignItems='center' sx={{ mt: 20}}>
+                <Box display='flex' flexDirection='row' alignItems='center' sx={{ mt: 20 }}>
                     <NextLink href='/' passHref>
-                        <Link typography='h3'  display={'flex'} flexDirection='row'>
+                        <Link typography='h3' display={'flex'} flexDirection='row'>
                             <ArrowBack />
                             <Typography>Home</Typography>
                         </Link>
@@ -35,4 +35,4 @@ const empty = () => {
     )
 }
 
-export default empty
+export default EmptyPage

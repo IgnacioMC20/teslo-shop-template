@@ -3,18 +3,17 @@ import { IconButton, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { useEffect, useState } from "react"
 
-export const ItemCounter = () => {
-
-    const [items, setItems] = useState(1);
+export const ItemCounter = ({currentQuantity, maxValue, updateQuantity}) => {
 
     const add = () => {
-        setItems(items + 1);
+        if (currentQuantity == maxValue) return;
+        updateQuantity(currentQuantity + 1);
 
     }
 
     const remove = () => {
-        if (items <= 1) return;
-        setItems(items - 1);
+        if (currentQuantity <= 1) return;
+        updateQuantity(currentQuantity - 1);
     }
 
     return (
@@ -22,7 +21,7 @@ export const ItemCounter = () => {
             <IconButton onClick={remove}>
                 <RemoveCircleOutline />
             </IconButton>
-            <Typography sx={{ width: 40, textAlign: 'center' }}> {items} </Typography>
+            <Typography sx={{ width: 40, textAlign: 'center' }}> {currentQuantity} </Typography>
             <IconButton onClick={add}>
                 <AddCircleOutline />
             </IconButton>

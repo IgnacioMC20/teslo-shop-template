@@ -17,12 +17,8 @@ export default function HomePage() {
 
       {
         isLoading
-          ? (
-            setTimeout(() => {
-              return <LoadingScreen />
-            }, 1000)
-          )
-            : <ProductList products = { products } />
+          ? <LoadingScreen />
+          : <ProductList products={products} />
       }
     </ShopLayout>
   )

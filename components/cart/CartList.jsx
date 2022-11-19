@@ -1,6 +1,8 @@
 import { Button, CardActionArea, CardMedia, Grid, Link, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import NextLink from "next/link"
+import { useContext } from "react"
+import { CartContext } from "../../context"
 import { initialData } from "../../database/products"
 import { ItemCounter } from "../ui"
 
@@ -11,17 +13,25 @@ const productsInCart = [
 ]
 
 export const CartList = ({ editable = false }) => {
+
+    const { cart } = useContext(CartContext);
+    console.log(cart);
+
+    const updateQuantity = (quantity) => {
+        
+    }
+
     return (
         <>
             {
-                productsInCart.map((product) => (
+                cart.map((product) => (
                     <Grid container spacing={2} key={product.slug} sx={{ mb: 1 }}>
                         <Grid item xs={3}>
-                            <NextLink href='/product/slug' passHref>
+                            <NextLink href={`/product/${product.slug}`} passHref>
                                 <Link>
                                     <CardActionArea>
                                         <CardMedia
-                                            image={`/products/${product.images[0]}`}
+                                            image={`/products/${product.image}`}
                                             component='img'
                                             sx={{ borderRadius: '5px' }}
                                         />
@@ -36,7 +46,7 @@ export const CartList = ({ editable = false }) => {
                                 {/* condicional */}
                                 {
                                     editable
-                                        ? <ItemCounter />
+                                        ? <ItemCounter currentQuantity={product.quantity} maxValue={product.inStock} updateQuantity={updateQuantity} />
                                         : <Typography variant="h5">3 items</Typography>
 
                                 }
