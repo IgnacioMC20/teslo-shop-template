@@ -14,18 +14,19 @@ const productsInCart = [
 
 export const CartList = ({ editable = false }) => {
 
-    const { cart } = useContext(CartContext);
-    console.log(cart);
+    const { cart, updateCartQuantity, removeCartProduct } = useContext(CartContext);
+    // console.log(cart);
 
-    const updateQuantity = (quantity) => {
-        
+    const updateQuantity = (product, newQuantity) => {
+        product.quantity = newQuantity
+        updateCartQuantity(product)
     }
 
     return (
         <>
             {
                 cart.map((product) => (
-                    <Grid container spacing={2} key={product.slug} sx={{ mb: 1 }}>
+                    <Grid container spacing={2} key={product.slug + product.size} sx={{ mb: 1 }}>
                         <Grid item xs={3}>
                             <NextLink href={`/product/${product.slug}`} passHref>
                                 <Link>
@@ -42,12 +43,12 @@ export const CartList = ({ editable = false }) => {
                         <Grid item xs={6}>
                             <Box display={'flex'} flexDirection={'column'}>
                                 <Typography variant="body1"> {product.title} </Typography>
-                                <Typography variant="body1"> Talla: <strong>M</strong> </Typography>
+                                <Typography variant="body1"> Talla: <strong>{product.size}</strong> </Typography>
                                 {/* condicional */}
                                 {
                                     editable
-                                        ? <ItemCounter currentQuantity={product.quantity} maxValue={product.inStock} updateQuantity={updateQuantity} />
-                                        : <Typography variant="h5">3 items</Typography>
+                                        ? <ItemCounter currentQuantity={product.quantity} maxValue={product.inStock} updateQuantity={(value) => { updateQuantity(product, value) }} />
+                                        : <Typography variant="h5">{ product.quantity } item{product.quantity > 1 && 's'}</Typography>
 
                                 }
                             </Box>
@@ -56,7 +57,7 @@ export const CartList = ({ editable = false }) => {
                             <Typography variant="subtitle1" >{`$${product.price}`}</Typography>
                             {
                                 editable && (
-                                    <Button variant="text" color="secondary">
+                                    <Button variant="text" color="secondary" onClick={ () => {removeCartProduct(product)} }>
                                         Remover
                                     </Button>
                                 )

@@ -4,11 +4,12 @@ import Cookies from "js-cookie"
 import NextLink from "next/link"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
-import { UIContext } from "../../context"
+import { CartContext, UIContext } from "../../context"
 
 export const Navbar = () => {
     const router = useRouter();
     const { toggleSideMenu } = useContext(UIContext);
+    const { numberOfItems } = useContext(CartContext);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -101,7 +102,7 @@ export const Navbar = () => {
                 <NextLink href='/cart' passHref>
                     <Link>
                         <IconButton>
-                            <Badge badgeContent={Cookies.get('cart').count} color='secondary'>
+                            <Badge badgeContent={numberOfItems < 10 ? numberOfItems : '+9' } color='secondary'>
                                 <ShoppingCartOutlined />
                             </Badge>
                         </IconButton>

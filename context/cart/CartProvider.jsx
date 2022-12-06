@@ -4,7 +4,11 @@ import { cart } from '../../utils';
 import { CartContext, cartReducer } from './';
 
 const CART_INITIAL_STATE = {
-  cart: []
+  cart: [],
+  numberOfItems: 0,
+  subTotal: 0,
+  tax: 0,
+  total: 0,
 }
 
 export const CartProvider = ({ children }) => {
@@ -30,11 +34,25 @@ export const CartProvider = ({ children }) => {
    */
 
   const isReloading = useRef(true);
+
   useEffect(() => {
     //todo: guardar solo los ids
     if (isReloading.current) isReloading.current = false;
-    
+
     else Cookies.set('cart', JSON.stringify(state.cart));
+  }, [state.cart])
+
+  useEffect(() => {
+    const subTotal = state.cart.reduce((prev, current) => (current.price * current.quantity) + prev, 0)
+    const orderSummary = {
+      numberOfItems: state.cart.reduce((prev, current) => current.quantity + prev, 0),
+      subTotal,
+      tax: subTotal * Number(process.env.NEXT_PUBLIC_TAX_RATE || 0),
+      total: subTotal * (Number(process.env.NEXT_PUBLIC_TAX_RATE || 0) + 1)
+    }
+
+    dispatch({type: cart.updateOrderSummary, payload: orderSummary})
+    console.log({ orderSummary })
   }, [state.cart])
 
   const addItem = (product) => {
@@ -56,6 +74,8 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: cart.add, payload: updatedProducts });
   };
 
+  const updateCartQuantity = (product) => (dispatch({ type: cart.updateItemQuantity, payload: product }))
+  const removeCartProduct = (product) => (dispatch({ type: cart.removeItem, payload: product }))
 
   return (
     <CartContext.Provider value={{
@@ -63,6 +83,8 @@ export const CartProvider = ({ children }) => {
 
       //methods
       addItem,
+      updateCartQuantity,
+      removeCartProduct,
     }}>
       {children}
     </CartContext.Provider>
